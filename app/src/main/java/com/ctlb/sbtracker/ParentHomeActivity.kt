@@ -1,7 +1,9 @@
 package com.ctlb.sbtracker
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Button
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.ctlb.sbtracker.ui.login.LoginActivity
 
 class ParentHomeActivity : AppCompatActivity() {
 
@@ -20,24 +23,25 @@ class ParentHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_organisation_home)
+        setContentView(R.layout.activity_parent_home)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_parent_layout)
+        val navView: NavigationView = findViewById(R.id.nav_parent_view)
+        val navController = findNavController(R.id.nav_host_fragment_parent)
+
+        val view_bus: FloatingActionButton = findViewById(R.id.view_bus_parent)
+        view_bus.setOnClickListener { view ->
+            val intent = Intent(this@ParentHomeActivity, ViewBusActivity::class.java)
+            startActivity(intent)
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
+                R.id.nav_parent_home), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -45,12 +49,12 @@ class ParentHomeActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.organisation_home, menu)
+        menuInflater.inflate(R.menu.parent_home, menu)
         return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.nav_host_fragment_parent)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

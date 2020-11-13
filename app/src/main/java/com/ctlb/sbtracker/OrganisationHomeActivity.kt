@@ -1,7 +1,11 @@
 package com.ctlb.sbtracker
 
+import android.content.ClipData
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.Button
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,10 +17,12 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.ctlb.sbtracker.ui.login.LoginActivity
 
-class OrganisationHomeActivity : AppCompatActivity() {
+class OrganisationHomeActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,20 +30,26 @@ class OrganisationHomeActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        val add_bus: FloatingActionButton = findViewById(R.id.add_bus)
+        add_bus.setOnClickListener { view ->
+            val intent = Intent(this@OrganisationHomeActivity, AddBusActivity::class.java)
+            startActivity(intent)
         }
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val navController = findNavController(R.id.nav_host_fragment)
+
+        val view_bus: FloatingActionButton = findViewById(R.id.view_bus_oranisation)
+        view_bus.setOnClickListener { view ->
+            val intent = Intent(this@OrganisationHomeActivity, ViewBusActivity::class.java)
+            startActivity(intent)
+        }
+
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_organisation_layout)
+        val navView: NavigationView = findViewById(R.id.nav_organisation_view)
+        val navController = findNavController(R.id.nav_host_fragment_organisation)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
+                R.id.nav_organisation_home), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -50,7 +62,7 @@ class OrganisationHomeActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.nav_host_fragment_organisation)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

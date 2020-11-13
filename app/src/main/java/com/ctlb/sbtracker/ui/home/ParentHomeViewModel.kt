@@ -1,13 +1,13 @@
-package com.ctlb.sbtracker.ui.gallery
+package com.ctlb.sbtracker.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class ParentHomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+        value = "This is Parent Fragment"
     }
     val text: LiveData<String> = _text
 }
