@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.view.marginTop
 import com.ctlb.sbtracker.ui.login.LoginActivity
+import com.ctlb.schoolbustracking.ViewBusActivity
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.registryType
 import kotlinx.android.synthetic.main.activity_sign_up.signUpButton
@@ -69,7 +70,7 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             else {
-                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                val intent = Intent(this@SignUpActivity, ViewBusActivity::class.java)
                 startActivity(intent)
             }
         }

@@ -18,6 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.ctlb.sbtracker.ui.login.LoginActivity
+import com.ctlb.schoolbustracking.ViewBusActivity
+import kotlinx.android.synthetic.main.activity_view_bus.*
 
 class OrganisationHomeActivity : AppCompatActivity(){
 

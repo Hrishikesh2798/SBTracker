@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.ctlb.sbtracker.ui.login.LoginActivity
+import com.ctlb.schoolbustracking.ViewBusActivity
 
 class ParentHomeActivity : AppCompatActivity() {
 
@@ -34,7 +35,8 @@ class ParentHomeActivity : AppCompatActivity() {
 
         val view_bus: FloatingActionButton = findViewById(R.id.view_bus_parent)
         view_bus.setOnClickListener { view ->
-            val intent = Intent(this@ParentHomeActivity, ViewBusActivity::class.java)
+
+            val intent = Intent(this@ParentHomeActivity,ViewBusActivity ::class.java)
             startActivity(intent)
         }
         // Passing each menu ID as a set of Ids because each
