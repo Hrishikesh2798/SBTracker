@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ctlb.sbtracker">
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +13,9 @@
         <activity android:name=".RowBusActivity"></activity>
         <activity android:name=".PopUpActivity" />
         <activity android:name=".AddBusActivity" />
+                <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <activity android:name=".ViewBusActivity" />
         <activity
             android:name=".DriverHomeActivity"
