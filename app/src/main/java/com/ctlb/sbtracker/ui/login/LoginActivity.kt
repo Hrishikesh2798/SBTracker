@@ -100,16 +100,9 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
             }
-            Log.e("above found","inside found == 2")
-            if(found ==2)
-            {
-                Log.e("found","inside found == 2")
                 setResult(Activity.RESULT_OK)
 
-                //Complete and destroy login activity once successful
-                finish()
-            }
-            Log.e("below found","inside found == 2")
+
         })
 
         username.afterTextChanged {
@@ -218,6 +211,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {

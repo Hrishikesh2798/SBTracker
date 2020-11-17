@@ -27,29 +27,28 @@ object DummyContent {
      */
     val ITEM_MAP: MutableMap<String, DummyItem> = HashMap()
     var count = 0
-    val database = FirebaseDatabase.getInstance().reference
-    val getdata = object : ValueEventListener{
-        override fun onDataChange(p0: DataSnapshot) {
-            for(i in p0.children)
-            {
-                if(i.child("type").getValue() == "B")
-                {
-                    count++
-                    busnumbers.add(i.child("busno").getValue().toString().toInt())
-                    phonenumbers.add(i.child("phn").getValue().toString())
-                }
-            }
-        }
 
-        override fun onCancelled(p0: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-    }
 
 
     init {
-        database.addValueEventListener(getdata)
-        database.addListenerForSingleValueEvent(getdata)
+        val database = FirebaseDatabase.getInstance().reference
+                .addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(p0: DataSnapshot) {
+                        for(i in p0.children)
+                        {
+                            if(i.child("type").getValue() == "B")
+                            {
+                                count++
+                                busnumbers.add(i.child("busno").getValue().toString().toInt())
+                                phonenumbers.add(i.child("phn").getValue().toString())
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(p0: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
         // Add some sample items.
         for (i in 1..count) {
             addItem(createDummyItem(phonenumbers[i],busnumbers[i]))

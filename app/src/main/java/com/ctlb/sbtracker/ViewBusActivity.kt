@@ -4,87 +4,63 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_view_bus.*
 
 class ViewBusActivity : AppCompatActivity()
 {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_bus)
 
-        val listView = findViewById<ListView>(R.id.Viewbuses_listview)
-        listView.adapter = MyCustomAdapter(this) // this needs to be my custom adapter telling my list what to render
-
-
-        Viewbuses_listview.setOnItemClickListener { parent:AdapterView<*>, view: View, position:Int, id:Long ->
-            if(position == 0)
-            {
-                Toast.makeText(this, "you click on first bus", Toast.LENGTH_SHORT).show()
-                val intent: Intent = Intent( this@ViewBusActivity , PopUpActivity::class.java)
-                startActivity(intent)
+        var busnumbers = ArrayList<String>()
+        var drivernames = ArrayList<String>()
+        Log.e("Viewbus Activity", "started")
+        var phnnos = ArrayList<String>()
+        var database = FirebaseDatabase.getInstance().reference
+        var getdata = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.e("View bus activity", "data change")
+                for (i in snapshot.children) {
+                    if (i.child("type").getValue().toString() == "B") {
+                        busnumbers.add(i.child("busno").getValue().toString())
+                        phnnos.add(i.child("phn").getValue().toString())
+                        drivernames.add(i.child("drvname").getValue().toString())
+                    }
+                }
+                val listView = findViewById<ListView>(R.id.Viewbuses_listview)
+                listView.adapter = RowBusActivity(this@ViewBusActivity, busnumbers, drivernames)  // this needs to be my custom adapter telling my list what to render
             }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
         }
-    }
+        database.addValueEventListener(getdata)
+        database.addListenerForSingleValueEvent(getdata)
+        Log.e("View bus Activity","after add value")
+        val listView = findViewById<ListView>(R.id.Viewbuses_listview)
 
+        listView.setOnItemClickListener() { adapterView, view, position, id ->
+            val intent = Intent(this@ViewBusActivity, PopUpActivity::class.java)
+            intent.putExtra("phone", phnnos.get(position))
+            startActivity(intent)
+            finish()
 
-
-
-    private class MyCustomAdapter(context:Context): BaseAdapter() {
-        private val busnumber = arrayListOf<String>(
-            // here we will take the buses from the database
-            "UP80 AH 8776", "UP80 PO 9872" ,"UP80 BH 9907" , "UP80 KM 6235" ,"UP80 AB 1223",
-            "UP80 AH 8776", "UP80 PO 9872" ,"UP80 BH 9907" , "UP80 KM 6235" ,"UP80 AB 1223",
-            "UP80 AH 8776", "UP80 PO 9872" ,"UP80 BH 9907" , "UP80 KM 6235" ,"UP80 AB 1223"
-        )
-        private  val drivername = arrayListOf<String>(
-            "Rajesh", "Hrishikesh" ,"Vishal", "Charan(The GOD)" , "Aviral",
-            "Rajesh", "Hrishikesh" ,"Vishal", "Charan(The GOD)" , "Aviral",
-            "Rajesh", "Hrishikesh" ,"Vishal", "Charan(The GOD)" , "Aviral"
-        )
-
-
-        private val mContext: Context
-
-        init {
-            mContext = context
         }
-
-        // responsible for how many rows in my list
-        override fun getCount(): Int {
-            // here we will take size of busnumber variable which we take from database
-            return busnumber.size
-        }
-        //ignore
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        //ignore
-        override fun getItem(position: Int): Any {
-
-            return "Test String"
-        }
-
-        // responsile for rendering out each row
-        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
-            val layoutInflater = LayoutInflater.from(mContext)
-            val row_viewbuses = layoutInflater.inflate(R.layout.row_viewbuses, viewGroup,false)
-
-            //here we providing the numbers to the BusNumber{which is in the layout} from the database
-            val bus_number_textview = row_viewbuses.findViewById<TextView>(R.id.bus_number)
-            bus_number_textview.text = busnumber.get(position)
-            // here we are providing the nams to the DriverName{which is in the layout} from the database
-            val driver_name_textview = row_viewbuses.findViewById<TextView>(R.id.driver_name)
-            driver_name_textview.text = drivername.get(position)
-            return row_viewbuses
-        }
-
 
 
     }
