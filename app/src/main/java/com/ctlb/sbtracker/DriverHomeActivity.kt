@@ -35,10 +35,10 @@ class DriverHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_list)
-
+        DummyContent.dataUpdate()
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        toolbar.title = title
+        toolbar.title = "SBTRacker"
 
         findViewById<FloatingActionButton>(R.id.logout_button).setOnClickListener { view ->
             val intent = Intent(this@DriverHomeActivity, LoginActivity::class.java)

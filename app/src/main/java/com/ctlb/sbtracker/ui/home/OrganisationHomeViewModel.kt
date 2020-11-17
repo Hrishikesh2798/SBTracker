@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class OrganisationHomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is Organisation Fragment"
+        value = "Welcome"
     }
     val text: LiveData<String> = _text
 }

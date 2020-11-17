@@ -29,37 +29,62 @@ object DummyContent {
      */
     val ITEM_MAP: MutableMap<String, DummyItem> = HashMap()
     var count = 0
-
+    var found = 0
 
 
     init {
+        // Add some sample items.
+    }
+
+    fun dataUpdate()
+    {
         val database = FirebaseDatabase.getInstance().reference
                 .addValueEventListener(object : ValueEventListener{
                     override fun onDataChange(p0: DataSnapshot) {
+                        Log.e("dummy","checking to clear lists $found")
+                        //if(found != 0)
+                        //{
+                        Log.e("dummy","clearing list")
+                        ITEMS.clear()
+                        ITEM_MAP.clear()
+                        busnumbers.clear()
+                        phonenumbers.clear()
+                        drivernames.clear()
+                        count=0
+                        //}
+                        found = 1
                         for(i in p0.children)
                         {
                             if(i.child("type").getValue() == "B")
                             {
-                                count++
+
                                 var bun = i.child("busno").getValue().toString()
                                 var p =i.child("phn").getValue().toString()
                                 Log.e("dummy","count $count bus no $bun phn $p")
                                 busnumbers.add(i.child("busno").getValue().toString())
                                 phonenumbers.add(i.child("phn").getValue().toString())
                                 drivernames.add(i.child("drvname").getValue().toString())
+                                count++
                             }
                         }
                         for (i in 0..count-1) {
                             Log.e("dummy","$i")
                             addItem(createDummyItem(phonenumbers.get(i),busnumbers.get(i), drivernames.get(i),i+1))
                         }
+
                     }
 
                     override fun onCancelled(p0: DatabaseError) {
                         TODO("Not yet implemented")
                     }
                 })
-        // Add some sample items.
+    }
+
+    fun clearList()
+    {
+        busnumbers.clear()
+        phonenumbers.clear()
+        drivernames.clear()
     }
 
     private fun addItem(item: DummyItem) {
@@ -74,7 +99,7 @@ object DummyContent {
     private fun makeDetails(busno: String, phone:String,drvname: String,count: Int): String {
         val builder = StringBuilder()
         builder.append("\nDetails about Bus:").append(busno)
-        for (i in 0..count - 1) {
+        for (i in 0..0) {
             builder.append("\nDriver name is $drvname")
             builder.append("\nPhone number for Bus is $phone.")
         }

@@ -50,35 +50,7 @@ class ParentHomeActivity : AppCompatActivity() {
             return super.onOptionsItemSelected(item)
         }
 
-        var database = FirebaseDatabase.getInstance().reference
-        var getdata= object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var name = ""
-                for(i in snapshot.children)
-                {
-                    Log.e("key","key is $(i.key)")
-                    if(i.child("phn").getValue().toString() == phn.toString())
-                    {
-                        Log.e("key in","key is $(i.key)")
-                        name = i.child("name").getValue().toString()
-                        Log.e("key in","Name :  $name  \n" +
-                                "  Phone : $phn")
 
-                    }
-                }
-                Log.e("outside","key is (i.key)")
-                val text = findViewById<TextView>(R.id.text_home_parent)
-                text.setText("Name : $name \n Phone : $phn")
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-
-        }
-        database.addValueEventListener(getdata)
-        database.addListenerForSingleValueEvent(getdata)
         Log.e("between","key is (i.key)")
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_parent_layout)
         val navView: NavigationView = findViewById(R.id.nav_parent_view)
