@@ -5,11 +5,11 @@ class Bus{
     var busno = ""
     var drvname = ""
     var type = "B"
-    var long = 0
-    var lat = 0
+    var long = 0.0
+    var lat = 0.0
     var status = "I"
 
-    constructor(phn : String,busno : String,drvname : String,long : Int,lat: Int,status: String)
+    constructor(phn : String,busno : String,drvname : String,long : Double,lat: Double,status: String)
     {
         this.phn = phn
         this.busno = busno

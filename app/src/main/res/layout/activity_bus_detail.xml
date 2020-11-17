@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F4F6F4"
     android:fitsSystemWindows="true"
     tools:context=".BusDetailActivity"
     tools:ignore="MergeRootFrame">
@@ -47,9 +48,22 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|start"
         android:layout_margin="@dimen/fab_margin"
+        android:background="#4CAF50"
         app:layout_anchor="@+id/item_detail_container"
-        app:layout_anchorGravity="top|end"
+        app:layout_anchorGravity="bottom|end"
         app:rippleColor="#4CAF50"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/stopShareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="#4CAF50"
+        app:layout_anchor="@+id/item_detail_container"
+        app:layout_anchorGravity="bottom"
+        app:rippleColor="#4CAF50"
+        app:srcCompat="@android:drawable/ic_media_pause" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -40,7 +40,7 @@ class AddBusActivity : AppCompatActivity() {
                 }
             }
             var database = FirebaseDatabase.getInstance().reference
-            var buses = Bus(phoneNumber.text.toString(),busno.text.toString(),driverName.text.toString(),0,0,"I")
+            var buses = Bus(phoneNumber.text.toString(),busno.text.toString(),driverName.text.toString(),0.0,0.0,"I")
             database.child(phoneNumber.text.toString()).setValue(buses)
 
             val intent = Intent(this@AddBusActivity, ViewBusActivity::class.java)

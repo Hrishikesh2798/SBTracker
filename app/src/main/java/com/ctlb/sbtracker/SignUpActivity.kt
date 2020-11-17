@@ -37,7 +37,7 @@ class SignUpActivity : AppCompatActivity() {
                 {
                     if(i.child("Name").getValue() == "Reg")
                     {
-                        reg = i.child("value").getValue().toString().toInt()
+                        reg = i.child("Value").getValue().toString().toInt()
                     }
                 }
             }
@@ -128,6 +128,7 @@ class SignUpActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
             }
+
             var user = User(phoneNumber.text.toString(),password.text.toString(),name.text.toString(),type,regCode.text.toString())
             database.child(phoneNumber.text.toString()).setValue(user)
 

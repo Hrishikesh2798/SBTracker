@@ -25,4 +25,6 @@
     <string name="title_item_detail">Item Detail</string>
     <string name="dialogTitle">Delete Bus Entry</string>
     <string name="dialogMessage">Do you want to proceed?</string>
+    <string name="title_activity_share_location">Map</string>
+    <string name="title_activity_view_location">Map</string>
 </resources>

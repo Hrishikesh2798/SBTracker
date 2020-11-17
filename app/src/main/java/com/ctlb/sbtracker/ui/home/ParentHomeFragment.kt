@@ -22,7 +22,6 @@ class ParentHomeFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(this).get(ParentHomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_parent_home, container, false)
-
         return root
     }
 

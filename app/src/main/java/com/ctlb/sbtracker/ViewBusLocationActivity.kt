@@ -54,10 +54,30 @@ class ViewBusLocationActivity : AppCompatActivity()
         val listView = findViewById<ListView>(R.id.Viewbuses_listview)
 
         listView.setOnItemClickListener() { adapterView, view, position, id ->
-            /*val intent = Intent(this@ViewBusLocationActivity, PopUpActivity::class.java)
-            intent.putExtra("phone", phnnos.get(position))
-            startActivity(intent)*/
-            finish()
+            var db = FirebaseDatabase.getInstance().reference
+                    .addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            var status = ""
+                            Log.e("View bus activity", "data change")
+                            for (i in snapshot.children) {
+                                if (i.child("phn").getValue().toString() == phnnos.get(position)) {
+                                    status = i.child("status").getValue().toString()
+                                }
+                            }
+                            if(status != "I")
+                            {
+                                val intent = Intent(this@ViewBusLocationActivity, ViewLocationActivity::class.java)
+                                intent.putExtra("phone", phnnos.get(position))
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
 
         }
 

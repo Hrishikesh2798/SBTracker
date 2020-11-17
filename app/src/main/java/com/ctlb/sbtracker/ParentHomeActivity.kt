@@ -58,7 +58,7 @@ class ParentHomeActivity : AppCompatActivity() {
 
         val view_bus: FloatingActionButton = findViewById(R.id.view_bus_parent)
         view_bus.setOnClickListener { view ->
-            val intent = Intent(this@ParentHomeActivity, ViewBusActivity::class.java)
+            val intent = Intent(this@ParentHomeActivity, ViewBusLocationActivity::class.java)
             startActivity(intent)
         }
         // Passing each menu ID as a set of Ids because each
