@@ -97,16 +97,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    var latitude:Double? =0.0
-    var longitude:Double?=0.0
-    @SuppressLint("MissingPermission")
-    private fun obtieneLocalizacion(){
-        fusedLocationClient.lastLocation
-                .addOnSuccessListener  locat{ion: Location? ->
-                    latitude =  location?.latitude
-                    longitude = location?.longitude
-                }
-    }
+    
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         getLocationAccess()
