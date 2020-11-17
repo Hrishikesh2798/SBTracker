@@ -20,18 +20,31 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.ctlb.sbtracker.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.password
 import kotlinx.android.synthetic.main.activity_login.registryType
+import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
+    var name = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login)
+
+        var phn = ""
+        var pwd = ""
+        var found = 0
+        var usertype = ""
+        var database = FirebaseDatabase.getInstance().reference
+
 
         val typeAdapter: ArrayAdapter<String>
         val types = arrayOf("Organisation", "Driver", "Parent/Student")
@@ -87,10 +100,16 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
             }
-            setResult(Activity.RESULT_OK)
+            Log.e("above found","inside found == 2")
+            if(found ==2)
+            {
+                Log.e("found","inside found == 2")
+                setResult(Activity.RESULT_OK)
 
-            //Complete and destroy login activity once successful
-            finish()
+                //Complete and destroy login activity once successful
+                finish()
+            }
+            Log.e("below found","inside found == 2")
         })
 
         username.afterTextChanged {
@@ -98,6 +117,7 @@ class LoginActivity : AppCompatActivity() {
                     username.text.toString(),
                     password.text.toString()
             )
+            phn = username.text.toString()
         }
 
         password.apply {
@@ -106,7 +126,10 @@ class LoginActivity : AppCompatActivity() {
                         username.text.toString(),
                         password.text.toString()
                 )
+                pwd = password.text.toString()
             }
+
+
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
@@ -122,6 +145,53 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
+                var getdata = object : ValueEventListener{
+                    override fun onDataChange(p0: DataSnapshot) {
+                        for(i in p0.children)
+                        {
+                            if(phn == i.child("phn").getValue().toString())
+                            {
+                                Log.e("found","inside found == 1")
+                                found = 1
+                                pwd = i.child("pwd").getValue().toString()
+                                name = i.child("name").getValue().toString()
+                                usertype = i.child("type").getValue().toString()
+                                Log.e("phn","$pwd  $name   $usertype  $found")
+                            }
+                        }
+
+                    }
+
+                    override fun onCancelled(p0: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                }
+
+                database.addValueEventListener(getdata)
+                Log.e("between","add 1 and 2")
+                database.addListenerForSingleValueEvent(getdata)
+                Log.e("found is","$found")
+                if(found == 0)
+                {
+                    username.setError("Invalid username")
+                    username.requestFocus()
+                    return@setOnClickListener
+                }
+                if(pwd != password.text.toString())
+                {
+                    password.setError("Incorrect password")
+                    password.requestFocus()
+                    return@setOnClickListener
+                }
+                if(usertype != type)
+                {
+                    return@setOnClickListener
+                }
+                found = 2
+                pwd = ""
+                name = ""
+                phn = ""
                 if(type == "O")
                 {
                     val intent = Intent(this@LoginActivity, OrganisationHomeActivity::class.java)
@@ -135,25 +205,28 @@ class LoginActivity : AppCompatActivity() {
                 else
                 {
                     val intent = Intent(this@LoginActivity, ParentHomeActivity::class.java)
+                    intent.putExtra("phone",username.text.toString())
                     startActivity(intent)
                 }
 
             }
 
             signup.setOnClickListener {
-                val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
-                startActivity(intent)
+                    val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+                    startActivity(intent)
+
             }
+
         }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
+        val displayName = name
         // TODO : initiate successful logged in experience
         Toast.makeText(
                 applicationContext,
-                "$welcome $displayName",
+                "$welcome $name",
                 Toast.LENGTH_LONG
         ).show()
     }

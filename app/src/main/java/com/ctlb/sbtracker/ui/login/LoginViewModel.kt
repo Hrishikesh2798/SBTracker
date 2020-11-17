@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
+import androidx.core.text.isDigitsOnly
 import com.ctlb.sbtracker.data.LoginRepository
 import com.ctlb.sbtracker.data.Result
 
@@ -40,7 +41,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains('@')) {
+        return if (username.isDigitsOnly()) {
             Patterns.PHONE.matcher(username).matches()
         } else {
             username.isNotBlank()

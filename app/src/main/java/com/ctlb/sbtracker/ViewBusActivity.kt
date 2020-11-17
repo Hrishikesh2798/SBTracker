@@ -1,4 +1,4 @@
-package com.ctlb.schoolbustracking
+package com.ctlb.sbtracker
 
 import android.content.Context
 import android.content.Intent
@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.ctlb.sbtracker.R
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_view_bus.*
 
 class ViewBusActivity : AppCompatActivity()
@@ -28,12 +26,10 @@ class ViewBusActivity : AppCompatActivity()
             if(position == 0)
             {
                 Toast.makeText(this, "you click on first bus", Toast.LENGTH_SHORT).show()
-                val intent: Intent = Intent( this@ViewBusActivity , PopUpActivity ::class.java)
+                val intent: Intent = Intent( this@ViewBusActivity , PopUpActivity::class.java)
                 startActivity(intent)
             }
         }
-
-
     }
 
 
@@ -47,9 +43,9 @@ class ViewBusActivity : AppCompatActivity()
             "UP80 AH 8776", "UP80 PO 9872" ,"UP80 BH 9907" , "UP80 KM 6235" ,"UP80 AB 1223"
         )
         private  val drivername = arrayListOf<String>(
-            "Rajesh", "Hrishikesh" ,"VishaL", "Charan(The GOD)" , "AviraL",
-            "Rajesh", "Hrishikesh" ,"VishaL", "Charan(The GOD)" , "Aviral",
-            "Rajesh", "Hrishikesh" ,"VishaL", "Charan(The GOD)" , "Aviral"
+            "Rajesh", "Hrishikesh" ,"Vishal", "Charan(The GOD)" , "Aviral",
+            "Rajesh", "Hrishikesh" ,"Vishal", "Charan(The GOD)" , "Aviral",
+            "Rajesh", "Hrishikesh" ,"Vishal", "Charan(The GOD)" , "Aviral"
         )
 
 
@@ -78,7 +74,7 @@ class ViewBusActivity : AppCompatActivity()
         // responsile for rendering out each row
         override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
             val layoutInflater = LayoutInflater.from(mContext)
-            val row_viewbuses = layoutInflater.inflate(R.layout.activity_row_bus, viewGroup,false)
+            val row_viewbuses = layoutInflater.inflate(R.layout.row_viewbuses, viewGroup,false)
 
             //here we providing the numbers to the BusNumber{which is in the layout} from the database
             val bus_number_textview = row_viewbuses.findViewById<TextView>(R.id.bus_number)

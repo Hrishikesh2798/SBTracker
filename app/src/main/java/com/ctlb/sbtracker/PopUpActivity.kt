@@ -1,13 +1,12 @@
-package com.ctlb.schoolbustracking
+package com.ctlb.sbtracker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.ctlb.sbtracker.R
 
-class PopUpActivity: AppCompatActivity() {
+class PopUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +17,9 @@ class PopUpActivity: AppCompatActivity() {
         button.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             //set title for alert dialog
-            builder.setTitle("Delete File")
+            builder.setTitle(R.string.dialogTitle)
             //set message for alert dialog
-            builder.setMessage("Are you sure??")
+            builder.setMessage(R.string.dialogMessage)
             builder.setIcon(android.R.drawable.ic_dialog_alert)
 
             //performing positive action

@@ -22,10 +22,8 @@ class ParentHomeFragment : Fragment() {
         homeViewModel =
             ViewModelProvider(this).get(ParentHomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_parent_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home_parent)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
         return root
     }
+
 }

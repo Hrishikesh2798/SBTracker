@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ItemListActivity"
+    tools:context=".DriverHomeActivity"
     tools:listitem="@layout/driver_home_content" />

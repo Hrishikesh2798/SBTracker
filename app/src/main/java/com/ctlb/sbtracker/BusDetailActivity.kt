@@ -17,7 +17,7 @@ class BusDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_detail)
+        setContentView(R.layout.activity_bus_detail)
         setSupportActionBar(findViewById(R.id.detail_toolbar))
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->

@@ -30,7 +30,7 @@
         android:id="@+id/signUpButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="370dp"
+        android:layout_marginTop="510dp"
         android:text="Sign Up" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:id="@+id/registryType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="370dp"
         android:spinnerMode="dropdown" />
 
     <EditText
@@ -57,17 +57,15 @@
         android:layout_height="wrap_content"
         android:hint="Registration Code"
         android:inputType="text"
-        android:layout_marginTop="370dp"
-        android:visibility="invisible"/>
+        android:layout_marginTop="450dp"/>
 
     <EditText
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_marginTop="290dp"
         android:hint="Enter Name"
-        android:layout_marginTop="370dp"
-        android:visibility="invisible"/>
+        android:inputType="text" />
 
 
 </RelativeLayout>
