@@ -4,7 +4,7 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-
+//row bus activity will show the buses in a list view manner.
 class RowBusActivity(private val context: Activity, private val busno: ArrayList<String>, private val drivername: ArrayList<String>)
     : ArrayAdapter<String>(context, R.layout.row_viewbuses, busno) {
 
