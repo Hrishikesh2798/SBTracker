@@ -17,13 +17,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_view_bus.*
 
-class ViewBusActivity : AppCompatActivity()
+class ViewBusLocationActivity : AppCompatActivity()
 {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_bus)
+        setContentView(R.layout.activity_view_bus_location)
 
         var busnumbers = ArrayList<String>()
         var drivernames = ArrayList<String>()
@@ -41,7 +41,7 @@ class ViewBusActivity : AppCompatActivity()
                     }
                 }
                 val listView = findViewById<ListView>(R.id.Viewbuses_listview)
-                listView.adapter = RowBusActivity(this@ViewBusActivity, busnumbers, drivernames)  // this needs to be my custom adapter telling my list what to render
+                listView.adapter = RowBusActivity(this@ViewBusLocationActivity, busnumbers, drivernames)  // this needs to be my custom adapter telling my list what to render
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -54,9 +54,9 @@ class ViewBusActivity : AppCompatActivity()
         val listView = findViewById<ListView>(R.id.Viewbuses_listview)
 
         listView.setOnItemClickListener() { adapterView, view, position, id ->
-            val intent = Intent(this@ViewBusActivity, PopUpActivity::class.java)
+            /*val intent = Intent(this@ViewBusLocationActivity, PopUpActivity::class.java)
             intent.putExtra("phone", phnnos.get(position))
-            startActivity(intent)
+            startActivity(intent)*/
             finish()
 
         }

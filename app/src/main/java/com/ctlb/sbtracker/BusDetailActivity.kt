@@ -2,10 +2,12 @@ package com.ctlb.sbtracker
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
+import com.google.firebase.database.FirebaseDatabase
 
 /**
  * An activity representing a single Item detail screen. This
@@ -19,9 +21,11 @@ class BusDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bus_detail)
         setSupportActionBar(findViewById(R.id.detail_toolbar))
-
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
+        var database = FirebaseDatabase.getInstance().reference
+        findViewById<FloatingActionButton>(R.id.shareButton).setOnClickListener { view ->
+            val x = intent.getStringExtra(BusDetailFragment.ARG_ITEM_ID)
+            Log.e("busDetail","$x")
+            Snackbar.make(view, "Location started sharing", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 

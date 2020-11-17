@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.ctlb.sbtracker.dummy.DummyContent
+import com.ctlb.sbtracker.ui.login.LoginActivity
 
 /**
  * An activity representing a list of Pings. This activity
@@ -39,9 +40,10 @@ class DriverHomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        findViewById<FloatingActionButton>(R.id.logout_button).setOnClickListener { view ->
+            val intent = Intent(this@DriverHomeActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         if (findViewById<NestedScrollView>(R.id.item_detail_container) != null) {

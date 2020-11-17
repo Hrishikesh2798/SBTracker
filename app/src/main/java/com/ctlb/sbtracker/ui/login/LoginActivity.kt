@@ -140,6 +140,7 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
                 var getdata = object : ValueEventListener{
                     override fun onDataChange(p0: DataSnapshot) {
+                        var run = 1
                         for(i in p0.children)
                         {
                             if(phn == i.child("phn").getValue().toString())
@@ -153,6 +154,50 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
 
+                        if(found == 0)
+                        {
+                            username.setError("Invalid username")
+                            username.requestFocus()
+                            run =0
+                        }
+                        if(pwd != password.text.toString())
+                        {
+                            password.setError("Incorrect password")
+                            password.requestFocus()
+                            run =0
+                        }
+                        if(usertype != type)
+                        {
+                            run =0
+                        }
+                        if(run ==1)
+                        {
+                            found = 2
+                            pwd = ""
+                            name = ""
+                            phn = ""
+                            if(type == "O")
+                            {
+                                val intent = Intent(this@LoginActivity, OrganisationHomeActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            else if(type == "D")
+                            {
+                                val intent = Intent(this@LoginActivity, DriverHomeActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            else
+                            {
+                                val intent = Intent(this@LoginActivity, ParentHomeActivity::class.java)
+                                intent.putExtra("phone",username.text.toString())
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
+
+
                     }
 
                     override fun onCancelled(p0: DatabaseError) {
@@ -162,52 +207,14 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 database.addValueEventListener(getdata)
-                Log.e("between","add 1 and 2")
-                database.addListenerForSingleValueEvent(getdata)
                 Log.e("found is","$found")
-                if(found == 0)
-                {
-                    username.setError("Invalid username")
-                    username.requestFocus()
-                    return@setOnClickListener
-                }
-                if(pwd != password.text.toString())
-                {
-                    password.setError("Incorrect password")
-                    password.requestFocus()
-                    return@setOnClickListener
-                }
-                if(usertype != type)
-                {
-                    return@setOnClickListener
-                }
-                found = 2
-                pwd = ""
-                name = ""
-                phn = ""
-                if(type == "O")
-                {
-                    val intent = Intent(this@LoginActivity, OrganisationHomeActivity::class.java)
-                    startActivity(intent)
-                }
-                else if(type == "D")
-                {
-                    val intent = Intent(this@LoginActivity, DriverHomeActivity::class.java)
-                    startActivity(intent)
-                }
-                else
-                {
-                    val intent = Intent(this@LoginActivity, ParentHomeActivity::class.java)
-                    intent.putExtra("phone",username.text.toString())
-                    startActivity(intent)
-                }
+
 
             }
 
             signup.setOnClickListener {
                     val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
                     startActivity(intent)
-
             }
 
         }

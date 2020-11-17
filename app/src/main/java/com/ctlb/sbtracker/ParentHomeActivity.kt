@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,6 +40,16 @@ class ParentHomeActivity : AppCompatActivity() {
         var phn = intent.getStringExtra("phone")
         Log.e("phn","phone is $phn")
 
+        fun onOptionsItemSelected(item: MenuItem): Boolean {
+            if(item.itemId == R.id.logout_parent)
+            {
+                val intent = Intent(this@ParentHomeActivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            return super.onOptionsItemSelected(item)
+        }
+
         var database = FirebaseDatabase.getInstance().reference
         var getdata= object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -56,7 +67,8 @@ class ParentHomeActivity : AppCompatActivity() {
                     }
                 }
                 Log.e("outside","key is (i.key)")
-                text_home_parent.setText("Name : $name \n Phone : $phn")
+                val text = findViewById<TextView>(R.id.text_home_parent)
+                text.setText("Name : $name \n Phone : $phn")
             }
 
             override fun onCancelled(error: DatabaseError) {

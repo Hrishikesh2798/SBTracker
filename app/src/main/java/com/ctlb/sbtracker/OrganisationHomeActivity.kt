@@ -3,6 +3,7 @@ package com.ctlb.sbtracker
 import android.content.ClipData
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -36,9 +37,15 @@ class OrganisationHomeActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
-        val view_bus: FloatingActionButton = findViewById(R.id.view_bus_oranisation)
-        view_bus.setOnClickListener { view ->
+        val delete_bus: FloatingActionButton = findViewById(R.id.view_bus_oranisation)
+        delete_bus.setOnClickListener { view ->
             val intent = Intent(this@OrganisationHomeActivity, ViewBusActivity::class.java)
+            startActivity(intent)
+        }
+
+        val view_bus: FloatingActionButton = findViewById(R.id.location_bus)
+        view_bus.setOnClickListener { view ->
+            val intent = Intent(this@OrganisationHomeActivity, ViewBusLocationActivity::class.java)
             startActivity(intent)
         }
 

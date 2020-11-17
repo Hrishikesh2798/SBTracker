@@ -1,5 +1,6 @@
 package com.ctlb.sbtracker.dummy
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -19,8 +20,9 @@ object DummyContent {
      * An array of sample (dummy) items.
      */
     val ITEMS: MutableList<DummyItem> = ArrayList()
-    val busnumbers: MutableList<Int> = ArrayList()
+    val busnumbers: MutableList<String> = ArrayList()
     val phonenumbers: MutableList<String> = ArrayList()
+    val drivernames: MutableList<String> =  ArrayList()
 
     /**
      * A map of sample (dummy) items, by ID.
@@ -39,9 +41,17 @@ object DummyContent {
                             if(i.child("type").getValue() == "B")
                             {
                                 count++
-                                busnumbers.add(i.child("busno").getValue().toString().toInt())
+                                var bun = i.child("busno").getValue().toString()
+                                var p =i.child("phn").getValue().toString()
+                                Log.e("dummy","count $count bus no $bun phn $p")
+                                busnumbers.add(i.child("busno").getValue().toString())
                                 phonenumbers.add(i.child("phn").getValue().toString())
+                                drivernames.add(i.child("drvname").getValue().toString())
                             }
+                        }
+                        for (i in 0..count-1) {
+                            Log.e("dummy","$i")
+                            addItem(createDummyItem(phonenumbers.get(i),busnumbers.get(i), drivernames.get(i),i+1))
                         }
                     }
 
@@ -50,9 +60,6 @@ object DummyContent {
                     }
                 })
         // Add some sample items.
-        for (i in 1..count) {
-            addItem(createDummyItem(phonenumbers[i],busnumbers[i]))
-        }
     }
 
     private fun addItem(item: DummyItem) {
@@ -60,15 +67,15 @@ object DummyContent {
         ITEM_MAP.put(item.id, item)
     }
 
-    private fun createDummyItem(phone: String, busno : Int): DummyItem {
-        return DummyItem(busno.toString(), "Bus No" + busno, makeDetails(busno,phone))
+    private fun createDummyItem(phone: String, busno : String,drvname: String,count: Int): DummyItem {
+        return DummyItem(busno.toString(), "Bus No:   " + busno, makeDetails(busno,phone,drvname,count))
     }
 
-    private fun makeDetails(busno: Int, phone:String): String {
+    private fun makeDetails(busno: String, phone:String,drvname: String,count: Int): String {
         val builder = StringBuilder()
-        builder.append("Details about Bus: ").append(busno)
-        for (i in 0..busno - 1) {
-            builder.append("\nMore details information here.")
+        builder.append("\nDetails about Bus:").append(busno)
+        for (i in 0..count - 1) {
+            builder.append("\nDriver name is $drvname")
             builder.append("\nPhone number for Bus is $phone.")
         }
         return builder.toString()

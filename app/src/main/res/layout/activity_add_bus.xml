@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="370dp"
-        android:text="Sign Up" />
+        android:text="Add Bus" />
 
     <TextView
         android:id="@+id/addBusText"
