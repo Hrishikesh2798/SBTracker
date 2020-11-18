@@ -9,6 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.database.FirebaseDatabase
 
+/**
+ * An activity which contains a delete button to delete the corresponding bus record it pops up
+ * a message asking to proceed or not
+ */
 class PopUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +22,8 @@ class PopUpActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.button)
         val phn = intent.getStringExtra("phone")
         Log.e("pop up","phn is $phn")
+
+        // Linking DB
         var database = FirebaseDatabase.getInstance().getReference()
 
 

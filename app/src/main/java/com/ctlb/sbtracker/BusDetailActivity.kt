@@ -26,9 +26,13 @@ class BusDetailActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.detail_toolbar))
         var database = FirebaseDatabase.getInstance().reference
         var share = findViewById<FloatingActionButton>(R.id.shareButton)
+
+        // Initializing variables
         var phn = ""
         var status = "I"
         var found = 0
+
+        //setting action on click of shareButton
         findViewById<FloatingActionButton>(R.id.shareButton).setOnClickListener { view ->
             val x = intent.getStringExtra(BusDetailFragment.ARG_ITEM_ID)
             Log.e("busDetail","$x")
@@ -50,10 +54,12 @@ class BusDetailActivity : AppCompatActivity() {
                         if(found == 0)
                         {
                             found = 1
-                            if(status == "I")
+                            if(status == "I") //if status is inactive
                             {
 
                                 status = "A"
+
+                                // setting the status to active in DB
                                 database.child(phn).child("status").setValue("A")
                                 Snackbar.make(view, "Location started sharing", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show()
@@ -62,9 +68,10 @@ class BusDetailActivity : AppCompatActivity() {
                                 intent.putExtra("phn",phn)
                                 intent.putExtra("busno",x.toString())
                                 intent.putExtra("drvname",drvname)
-                                startActivity(intent)
+                                startActivityForResult(intent,1111)
 
                             }
+                            // If status is already active
                             else{
                                 Snackbar.make(view, "Location already being shared", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show()
@@ -80,17 +87,18 @@ class BusDetailActivity : AppCompatActivity() {
                 })
         }
 
+        // setting action on click of stopShareButton
         findViewById<FloatingActionButton>(R.id.stopShareButton).setOnClickListener { view ->
-            if(status != "I")
-            {
-                database.child(phn).child("status").setValue("I")
-                found = 0
-                status = "I"
-                Snackbar.make(view, "Location stopped sharing", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show()
-            }
-
+            Log.e("loc","$phn")
+            // setting bus status to Inactive
+            database.child(phn).child("status").setValue("I")
+            finishActivity(1111)
+            found = 0
+            status = "I"
+            Snackbar.make(view, "Location stopped sharing", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
         }
+
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

@@ -17,6 +17,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_view_bus.*
 
+/**
+ * this activity displays a list of added buses clicking on which will give an option to delete them
+ */
 class ViewBusActivity : AppCompatActivity()
 {
 
@@ -25,11 +28,16 @@ class ViewBusActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_bus)
 
+        // Initializing Lists
         var busnumbers = ArrayList<String>()
         var drivernames = ArrayList<String>()
         Log.e("Viewbus Activity", "started")
         var phnnos = ArrayList<String>()
+
+        // Getting DB Instance
         var database = FirebaseDatabase.getInstance().reference
+
+        // Fetching buses from DB and adding them to the lists
         var getdata = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.e("View bus activity", "data change")
@@ -40,6 +48,8 @@ class ViewBusActivity : AppCompatActivity()
                         drivernames.add(i.child("drvname").getValue().toString())
                     }
                 }
+
+                // Updating the listView with new records
                 val listView = findViewById<ListView>(R.id.Viewbuses_listview)
                 listView.adapter = RowBusActivity(this@ViewBusActivity, busnumbers, drivernames)  // this needs to be my custom adapter telling my list what to render
             }
@@ -49,10 +59,13 @@ class ViewBusActivity : AppCompatActivity()
             }
 
         }
+
+        // adding value Listener to the DB
         database.addValueEventListener(getdata)
         Log.e("View bus Activity","after add value")
         val listView = findViewById<ListView>(R.id.Viewbuses_listview)
 
+        // Redirects to popup activity on clicking of listView entry
         listView.setOnItemClickListener() { adapterView, view, position, id ->
             val intent = Intent(this@ViewBusActivity, PopUpActivity::class.java)
             intent.putExtra("phone", phnnos.get(position))

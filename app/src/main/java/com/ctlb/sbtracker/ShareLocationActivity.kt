@@ -19,18 +19,30 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.FirebaseDatabase
 
+/**
+ * A google maps activity which starts sharing the location of the bus. It shares the location
+ * continuously and periodically in some interval of time
+ */
 class ShareLocationActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
     private val LOCATION_PERMISSION_REQUEST = 1
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+
+    companion object{
+        val activity = this
+    }
+
+    // updates location in a fixed interval
     private fun getLocationUpdates() {
         locationRequest = LocationRequest()
         locationRequest.interval = 30000
         locationRequest.fastestInterval = 20000
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
+
+        // Generated longitude and lattitude from the location updated
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 if (locationResult.locations.isNotEmpty()) {
@@ -38,12 +50,18 @@ class ShareLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                     if (location != null) {
                         val latLng = LatLng(location.latitude, location.longitude)
                         val markerOptions = MarkerOptions().position(latLng)
+
+                        // Marking location the map
                         map.addMarker(markerOptions)
                         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+
+                        // getting values from the previous activity
                         var phn = intent.getStringExtra("phn")
                         var busno = intent.getStringExtra("busno")
                         var drvname = intent.getStringExtra("drvname")
                         var database = FirebaseDatabase.getInstance().reference
+
+                        // sharing location to the DB
                         var bus = Bus(phn.toString(),busno.toString(),drvname.toString(),location.longitude,location.latitude,"A")
                         database.child(phn.toString()).setValue(bus)
                     }
@@ -61,8 +79,6 @@ class ShareLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)

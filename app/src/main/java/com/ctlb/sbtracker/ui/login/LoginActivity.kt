@@ -39,13 +39,14 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
+        //Initializing variables
         var phn = ""
         var pwd = ""
         var found = 0
         var usertype = ""
         var database = FirebaseDatabase.getInstance().reference
 
-
+        //Creation of spinner
         val typeAdapter: ArrayAdapter<String>
         val types = arrayOf("Organisation", "Driver", "Parent/Student")
         var type = "O"
@@ -135,6 +136,7 @@ class LoginActivity : AppCompatActivity() {
                 false
             }
 
+            // sets action on click of login button
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
@@ -153,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
                                 Log.e("phn","$pwd  $name   $usertype  $found")
                             }
                         }
-
+                        // CHecking for errors in the filled data
                         if(found == 0)
                         {
                             username.setError("Invalid username")
@@ -176,19 +178,19 @@ class LoginActivity : AppCompatActivity() {
                             pwd = ""
                             name = ""
                             phn = ""
-                            if(type == "O")
+                            if(type == "O") // if user is organisation type
                             {
                                 val intent = Intent(this@LoginActivity, OrganisationHomeActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
-                            else if(type == "D")
+                            else if(type == "D") // if user is driver type
                             {
                                 val intent = Intent(this@LoginActivity, DriverHomeActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
-                            else
+                            else // if user is parent/children type
                             {
                                 val intent = Intent(this@LoginActivity, ParentHomeActivity::class.java)
                                 intent.putExtra("phone",username.text.toString())
@@ -206,6 +208,7 @@ class LoginActivity : AppCompatActivity() {
 
                 }
 
+                //adding value listner to the database
                 database.addValueEventListener(getdata)
                 Log.e("found is","$found")
 
@@ -221,6 +224,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    //Pops up the welcome message
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = name

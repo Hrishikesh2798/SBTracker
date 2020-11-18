@@ -20,17 +20,26 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.registryType
 import kotlinx.android.synthetic.main.activity_sign_up.signUpButton
 
+/**
+ * This activity adds a new user to the database. The activity contains different fields to add data
+ * and a sign up button to store that data onto the DB
+ */
 class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        // getting DB instance
         var database = FirebaseDatabase.getInstance().reference
+
+        // Creating spinner
         val typeAdapter: ArrayAdapter<String>
         val types = arrayOf("Organisation", "Driver", "Parent/Student")
         var type : String = "O"
         var reg = 0
 
+
+        // getting registration code
         var getdata = object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(i in snapshot.children)
@@ -48,13 +57,14 @@ class SignUpActivity : AppCompatActivity() {
 
         }
 
+        // adding value listener to DB
         database.addValueEventListener(getdata)
-        database.addListenerForSingleValueEvent(getdata)
 
         val reg1 = (reg + 1)
         database.child("Reg").setValue(reg1.toString())
         regCode.isEnabled = false
 
+        // adding list to the spinner
         typeAdapter = ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item, types)
         registryType.adapter = typeAdapter
 
@@ -94,6 +104,8 @@ class SignUpActivity : AppCompatActivity() {
             val etname : String = name.text.toString()
             var reg : String = regCode.text.toString()
 
+
+            // Validating the data entered
             if(phn.isEmpty())
             {
                 phoneNumber.setError("Phone number is required")
@@ -129,9 +141,11 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
 
+            // Inserting details to the DB
             var user = User(phoneNumber.text.toString(),password.text.toString(),name.text.toString(),type,regCode.text.toString())
             database.child(phoneNumber.text.toString()).setValue(user)
 
+            //Going back to the login activity
             val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()

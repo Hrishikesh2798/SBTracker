@@ -20,6 +20,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.ctlb.sbtracker.ui.login.LoginActivity
 
+/**
+ * It represents the Organisation home page which the organisation visits directly after logging in
+ * the activity contains 3 buttons (for add, delete and view location of buses), a side menu and
+ * testViews to display messages
+ */
 class OrganisationHomeActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -66,6 +71,23 @@ class OrganisationHomeActivity : AppCompatActivity(){
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.organisation_home, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        if(id == R.id.logout_organisation)
+        {
+            val intent = Intent(this@OrganisationHomeActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        if(id == R.id.logout_parent)
+        {
+            val intent = Intent(this@OrganisationHomeActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -1,5 +1,7 @@
 package com.ctlb.sbtracker
 
+
+// A class which represents the format of each bus record
 class Bus{
     var phn = ""
     var busno = ""

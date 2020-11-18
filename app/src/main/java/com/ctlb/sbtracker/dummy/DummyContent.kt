@@ -9,23 +9,25 @@ import java.util.ArrayList
 import java.util.HashMap
 
 /**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
+ * Fetches data from the database and puts it into the format required
  *
- * TODO: Replace all uses of this class before publishing your app.
  */
 object DummyContent {
 
     /**
-     * An array of sample (dummy) items.
+     * An array of bus items.
      */
     val ITEMS: MutableList<DummyItem> = ArrayList()
+
+    /**
+     * Lists of the details of each buses
+     */
     val busnumbers: MutableList<String> = ArrayList()
     val phonenumbers: MutableList<String> = ArrayList()
     val drivernames: MutableList<String> =  ArrayList()
 
     /**
-     * A map of sample (dummy) items, by ID.
+     * A map of buses, by ID.
      */
     val ITEM_MAP: MutableMap<String, DummyItem> = HashMap()
     var count = 0
@@ -33,10 +35,10 @@ object DummyContent {
 
 
     init {
-        // Add some sample items.
+        // initiating the object
     }
 
-    fun dataUpdate()
+    fun dataUpdate() // fetches data
     {
         val database = FirebaseDatabase.getInstance().reference
                 .addValueEventListener(object : ValueEventListener{
@@ -69,6 +71,7 @@ object DummyContent {
                         }
                         for (i in 0..count-1) {
                             Log.e("dummy","$i")
+                            // adding dummy items to the Arrays
                             addItem(createDummyItem(phonenumbers.get(i),busnumbers.get(i), drivernames.get(i),i+1))
                         }
 
@@ -87,15 +90,18 @@ object DummyContent {
         drivernames.clear()
     }
 
+    //addds item to the array
     private fun addItem(item: DummyItem) {
         ITEMS.add(item)
         ITEM_MAP.put(item.id, item)
     }
 
+    //Creates a dummy item out of the fetched data
     private fun createDummyItem(phone: String, busno : String,drvname: String,count: Int): DummyItem {
         return DummyItem(busno.toString(), "Bus No:   " + busno, makeDetails(busno,phone,drvname,count))
     }
 
+    //adds contents
     private fun makeDetails(busno: String, phone:String,drvname: String,count: Int): String {
         val builder = StringBuilder()
         builder.append("\nDetails about Bus:").append(busno)

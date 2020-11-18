@@ -40,6 +40,7 @@ class DriverHomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.title = "SBTRacker"
 
+        // Logs the driver out of the app
         findViewById<FloatingActionButton>(R.id.logout_button).setOnClickListener { view ->
             val intent = Intent(this@DriverHomeActivity, LoginActivity::class.java)
             startActivity(intent)
@@ -57,6 +58,8 @@ class DriverHomeActivity : AppCompatActivity() {
         setupRecyclerView(findViewById(R.id.item_list))
     }
 
+
+    // setting up recycler view to show the items onto the screen
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, twoPane)
     }
@@ -98,6 +101,7 @@ class DriverHomeActivity : AppCompatActivity() {
             return ViewHolder(view)
         }
 
+        // Binds the items onto the recycler view
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = values[position]
             holder.idView.text = item.id
